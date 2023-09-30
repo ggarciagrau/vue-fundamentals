@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <div id="app">
-        {{ text }}
+        <img v-bind:src="src" v-bind:alt="alt">
     </div>
 
     <script>
-        const vm = Vue.createApp({
-            data() {
-                return {
-                    text: "Hello world",
-                    rawHtml: "<ul><li>I like hamsters</li></ul>"
-                };
-            },
-            template: `<div v-text="text"></div><div v-once v-text="text"></div><div v-html="rawHtml" />`
-        }).mount("#app");
+      const vm = Vue.createApp({
+        data() {
+          return {
+            src: "https://www.google.es/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+            alt: "Google logo"
+          };
+        }
+      }).mount("#app");
 
-        console.log('Text', vm.text)
+      console.log("Text", vm.text);
     </script>
-</body>
+  </body>
 </html>
