@@ -8,23 +8,26 @@
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-    <div id="app">
-    </div>
+    <div id="app"></div>
 
     <script>
       const vm = Vue.createApp({
         data() {
           return {
-            src: "https://www.google.es/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-            alt: "Google logo",
-            customAttribute: "width",
-            customValue: "300"
+            counter: 0
           };
         },
-        template: "<img v-bind:src='src' v-bind:alt='alt' v-bind:[customAttribute]='customValue'>"
+        methods: {
+            increment() {
+                this.counter++;
+            },
+            submit(ev) {
+                ev.preventDefault();
+                console.log('Sending...')
+            }
+        },
+        template: `<button v-on:click="increment" v-on:keyup="increment">{{ counter }}</button><form v-on:submit="submit"><button type="submit">Submit</button></form>`,
       }).mount("#app");
-
-      console.log("Text", vm.text);
     </script>
   </body>
 </html>
