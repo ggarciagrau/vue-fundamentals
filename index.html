@@ -22,11 +22,10 @@
                 this.counter++;
             },
             submit(ev) {
-                ev.preventDefault();
                 console.log('Sending...')
             }
         },
-        template: `<button v-on:click="increment" v-on:keyup="increment">{{ counter }}</button><form v-on:submit="submit"><button type="submit">Submit</button></form>`,
+        template: `<button v-on:click="increment" v-on:keyup="increment">{{ counter }}</button><form v-on:submit.prevent="submit"><button type="submit">Submit</button></form>`,
       }).mount("#app");
     </script>
   </body>
