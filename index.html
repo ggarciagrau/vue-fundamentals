@@ -9,7 +9,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <div id="app">
-        <img v-bind:src="src" v-bind:alt="alt">
     </div>
 
     <script>
@@ -17,9 +16,12 @@
         data() {
           return {
             src: "https://www.google.es/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-            alt: "Google logo"
+            alt: "Google logo",
+            customAttribute: "width",
+            customValue: "300"
           };
-        }
+        },
+        template: "Z<img v-bind:src='src' v-bind:alt='alt' v-bind:[customAttribute]='customValue'>"
       }).mount("#app");
 
       console.log("Text", vm.text);
