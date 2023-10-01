@@ -14,18 +14,15 @@
       const vm = Vue.createApp({
         data() {
           return {
-            counter: 0
+            value: "Hello world"
           };
         },
         methods: {
-            increment() {
-                this.counter++;
-            },
-            submit(ev) {
-                console.log('Sending...')
-            }
+          changeValue(ev) {
+            this.value = ev.target.value
+          }
         },
-        template: `<button v-on:click="increment" v-on:keyup="increment">{{ counter }}</button><form v-on:submit.prevent.stop="submit"><button type="submit">Submit</button></form>`,
+        template: `<h1>{{ value }}</h1><input type="text" :value="value" @input="changeValue" />`,
       }).mount("#app");
     </script>
   </body>
