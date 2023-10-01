@@ -14,10 +14,23 @@
       const vm = Vue.createApp({
         data() {
           return {
-            value: "Hello world"
+            firstName: "Roberto",
+            lastname: "Martínez",
+            now: new Date()
           };
         },
-        template: `<h1>{{ value }}</h1><input type="text" v-model="value" />`,
+        computed: {
+          formattedDate() {
+            return this.now.toLocaleDateString();
+          },
+          fullName() {
+            return `${this.firstName} ${this.lastname}`
+          }
+        },
+        template: `
+        <h1>{{ fullName }}</h1>
+        <h2>{{ formattedDate }}</h2>
+        `,
       }).mount("#app");
     </script>
   </body>
