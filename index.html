@@ -17,12 +17,7 @@
             value: "Hello world"
           };
         },
-        methods: {
-          changeValue(ev) {
-            this.value = ev.target.value
-          }
-        },
-        template: `<h1>{{ value }}</h1><input type="text" :value="value" @input="changeValue" />`,
+        template: `<h1>{{ value }}</h1><input type="text" v-model="value" />`,
       }).mount("#app");
     </script>
   </body>
