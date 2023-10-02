@@ -45,6 +45,7 @@
           return {
             text: "Door is closed",
             isClosed: true,
+            username: ""
             // styles: {
             //   backgroundColor: "#e5e5e5",
             // }
@@ -76,6 +77,13 @@
         <div class="container" :class="styles">
           <h2>{{ text }}</h2>
           <button @click="isClosed = !isClosed">{{ label }}</button>
+          <div v-if="!isClosed">
+            <p>User: {{ username }}</p>
+          </div>
+          <div v-else>
+            <label for="username">User: </label>
+            <input id="username" type="text" v-model="username" />
+          </div>
         </div>
         `,
       }).mount("#app");
