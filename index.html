@@ -4,6 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #app,
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
+      button {
+        margin-top: 24px;
+        border: none;
+        background-color: white;
+        padding: 8px 24px;
+        border-radius: 12px;
+      }
+      .closed {
+        background-color: #eca1a6;
+      }
+      .open {
+        background-color: #b5e7a0;
+      }
+    </style>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -14,22 +43,41 @@
       const vm = Vue.createApp({
         data() {
           return {
-            text: "Door is open",
-            isClosed: false
+            text: "Door is closed",
+            isClosed: true,
+            // styles: {
+            //   backgroundColor: "#e5e5e5",
+            // }
           };
         },
         computed: {
           label() {
             return this.isClosed ? "Open" : "Close";
+          },
+          styles() {
+            return this.isClosed ? ['closed'] : ['open']
           }
         },
         watch: {
           isClosed(newValue) {
-            if (!newValue) return this.text = 'Door is open';
-            this.text = 'Door is closed';
-          }
+            if (!newValue) {
+              this.text = "Door is open";
+              // this.styles.backgroundColor = "#b5e7a0";
+            } else {
+              this.text = "Door is closed";
+              // this.styles.backgroundColor = "#eca1a6";
+            }
+          },
         },
-        template: `<p>{{ text }}</p><button @click="isClosed = !isClosed">{{ label }}</button>`,
+        template: `
+        <!-- <div class="container" :style="styles"> -->
+        <!-- <div class="container" :class="['open']"> -->
+        <!-- <div class="container" :class="{ 'open': !isClosed, 'closed': isClosed }"> -->
+        <div class="container" :class="styles">
+          <h2>{{ text }}</h2>
+          <button @click="isClosed = !isClosed">{{ label }}</button>
+        </div>
+        `,
       }).mount("#app");
     </script>
   </body>
