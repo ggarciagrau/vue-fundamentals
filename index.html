@@ -100,7 +100,7 @@
           <div v-if="!isClosed">
             <p>User: {{ username }}</p>
             <div class="list">
-              <div v-for="{title, description} in articles" class="item">
+              <div v-for="({title, description}) in articles" class="item">
                 <h4 class="title">{{title}}</h4>
                 <p>{{description}}</p>
               </div>
