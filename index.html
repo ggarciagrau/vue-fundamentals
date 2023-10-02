@@ -32,6 +32,16 @@
       .open {
         background-color: #b5e7a0;
       }
+      .list {
+        display: flex;
+        flex-direction: column;
+      }
+      .item {
+        border: 1px solid black;
+      }
+      .title {
+        font-weight: bolder;
+      }
     </style>
   </head>
   <body>
@@ -45,7 +55,17 @@
           return {
             text: "Door is closed",
             isClosed: true,
-            username: ""
+            username: "",
+            articles: [
+              {
+                title: "Software news",
+                description: "About software"
+              },
+              {
+                title: "IT news",
+                description: "About IT"
+              }
+            ]
             // styles: {
             //   backgroundColor: "#e5e5e5",
             // }
@@ -79,6 +99,12 @@
           <button @click="isClosed = !isClosed">{{ label }}</button>
           <div v-if="!isClosed">
             <p>User: {{ username }}</p>
+            <div class="list">
+              <div v-for="{title, description} in articles" class="item">
+                <h4 class="title">{{title}}</h4>
+                <p>{{description}}</p>
+              </div>
+            </div>
           </div>
           <div v-else>
             <label for="username">User: </label>
