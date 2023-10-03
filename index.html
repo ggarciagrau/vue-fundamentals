@@ -50,7 +50,7 @@
     <div id="app"></div>
 
     <script>
-      const vm = Vue.createApp({
+      const app = Vue.createApp({
         data() {
           return {
             text: "Door is closed",
@@ -59,13 +59,13 @@
             articles: [
               {
                 title: "Software news",
-                description: "About software"
+                description: "About software",
               },
               {
                 title: "IT news",
-                description: "About IT"
-              }
-            ]
+                description: "About IT",
+              },
+            ],
             // styles: {
             //   backgroundColor: "#e5e5e5",
             // }
@@ -76,8 +76,8 @@
             return this.isClosed ? "Open" : "Close";
           },
           styles() {
-            return this.isClosed ? ['closed'] : ['open']
-          }
+            return this.isClosed ? ["closed"] : ["open"];
+          },
         },
         watch: {
           isClosed(newValue) {
@@ -100,10 +100,12 @@
           <div v-if="!isClosed">
             <p>User: {{ username }}</p>
             <div class="list">
-              <div v-for="({title, description}) in articles" class="item">
-                <h4 class="title">{{title}}</h4>
-                <p>{{description}}</p>
-              </div>
+              <item 
+                v-for="({title, description}, i) in articles" 
+                :key="i"
+                :title="title"
+                :description="description"
+              />
             </div>
           </div>
           <div v-else>
@@ -112,7 +114,31 @@
           </div>
         </div>
         `,
-      }).mount("#app");
+      });
+
+      app.component("item", {
+        // props: ["title", "desciption"],
+        props: {
+          title: {
+            type: String,
+            required: true,
+            default: ''
+          },
+          description: {
+            type: String,
+            required: true,
+            default: ''
+          }
+        },
+        template: `
+        <div class="item">
+          <h4 class="title">{{title}}</h4>
+          <p>{{description}}</p>
+        </div>
+        `,
+      });
+
+      const vm = app.mount("#app");
     </script>
   </body>
 </html>
