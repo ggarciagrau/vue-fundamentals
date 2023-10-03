@@ -57,25 +57,19 @@
         },
         template: `
         <div>
-          <v-header>
-            Title
-          </v-header>
-          <v-main>
-            Lorem ipsum
-          </v-main>
+          <v-layout>
+            <template v-slot:header>My title</template>
+            <template v-slot:main><button>Click</button></template>
+          </v-layout>
         </div>
         `,
       });
 
-      app.component('v-header', {
+      app.component('v-layout', {
         template: `
-          <header><slot /></header>
-        `
-      });
-
-      app.component('v-main', {
-        template: `
-          <main><slot /></main>
+          <!-- first slot name is 'default' by default -->
+          <header><slot name="header"/></header>
+          <main><slot name="main"/></main>
         `
       });
 
