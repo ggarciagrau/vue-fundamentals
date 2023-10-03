@@ -14,28 +14,45 @@
       const app = Vue.createApp({
         data() {
           return {
+            items: ["one", "two", "three"]
           };
+        },
+        methods: {
+          remove(idx) {
+            console.log("Parent event triggered")
+            const newItems = this.items;
+            newItems.splice(idx, 1);
+            this.items = newItems;
+          }
         },
         template: `
         <ul>
-          <v-item v-for="n in 5" :itemNumber="n">Item</v-item>  
+          <v-item 
+            v-for="(item, idx) in items" 
+            :itemNumber="item"
+            v-on:remove="remove(idx)"
+          >
+            Item
+          </v-item>  
         </ul>
         `,
-      });
-
-      app.component("parent", {
-        template: `<ul><slot /></ul>`
       });
 
       app.component("v-item", {
         props: {
           itemNumber: {
-            type: Number,
+            type: String,
             required: true,
-            default: 0
+            default: ""
           }
         },
-        template: `<li><slot /> {{ itemNumber }}</li>`
+        methods: {
+          removeItself() {
+            console.log('Child event triggered')
+            this.$emit("remove");
+          }
+        },
+        template: `<li v-on:click="removeItself"><slot /> {{ itemNumber }}</li>`
       });
 
       const vm = app.mount("#app");
