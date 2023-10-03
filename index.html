@@ -4,45 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      body {
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-      }
-      #app,
-      .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-      }
-      button {
-        margin-top: 24px;
-        border: none;
-        background-color: white;
-        padding: 8px 24px;
-        border-radius: 12px;
-      }
-      .closed {
-        background-color: #eca1a6;
-      }
-      .open {
-        background-color: #b5e7a0;
-      }
-      .list {
-        display: flex;
-        flex-direction: column;
-      }
-      .item {
-        border: 1px solid black;
-      }
-      .title {
-        font-weight: bolder;
-      }
-    </style>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -56,21 +17,25 @@
           };
         },
         template: `
-        <div>
-          <v-layout>
-            <template v-slot:header>My title</template>
-            <template v-slot:main><button>Click</button></template>
-          </v-layout>
-        </div>
+        <ul>
+          <v-item v-for="n in 5" :itemNumber="n">Item</v-item>  
+        </ul>
         `,
       });
 
-      app.component('v-layout', {
-        template: `
-          <!-- first slot name is 'default' by default -->
-          <header><slot name="header"/></header>
-          <main><slot name="main"/></main>
-        `
+      app.component("parent", {
+        template: `<ul><slot /></ul>`
+      });
+
+      app.component("v-item", {
+        props: {
+          itemNumber: {
+            type: Number,
+            required: true,
+            default: 0
+          }
+        },
+        template: `<li><slot /> {{ itemNumber }}</li>`
       });
 
       const vm = app.mount("#app");
