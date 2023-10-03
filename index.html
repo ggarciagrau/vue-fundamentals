@@ -53,89 +53,30 @@
       const app = Vue.createApp({
         data() {
           return {
-            text: "Door is closed",
-            isClosed: true,
-            username: "",
-            articles: [
-              {
-                title: "Software news",
-                description: "About software",
-              },
-              {
-                title: "IT news",
-                description: "About IT",
-              },
-            ],
-            // styles: {
-            //   backgroundColor: "#e5e5e5",
-            // }
           };
         },
-        computed: {
-          label() {
-            return this.isClosed ? "Open" : "Close";
-          },
-          styles() {
-            return this.isClosed ? ["closed"] : ["open"];
-          },
-        },
-        watch: {
-          isClosed(newValue) {
-            if (!newValue) {
-              this.text = "Door is open";
-              // this.styles.backgroundColor = "#b5e7a0";
-            } else {
-              this.text = "Door is closed";
-              // this.styles.backgroundColor = "#eca1a6";
-            }
-          },
-        },
         template: `
-        <!-- <div class="container" :style="styles"> -->
-        <!-- <div class="container" :class="['open']"> -->
-        <!-- <div class="container" :class="{ 'open': !isClosed, 'closed': isClosed }"> -->
-        <div class="container" :class="styles">
-          <h2>{{ text }}</h2>
-          <button @click="isClosed = !isClosed">{{ label }}</button>
-          <div v-if="!isClosed">
-            <p>User: {{ username }}</p>
-            <div class="list">
-              <item 
-                v-for="({title, description}, i) in articles" 
-                :key="i"
-                :title="title"
-                :description="description"
-              />
-            </div>
-          </div>
-          <div v-else>
-            <label for="username">User: </label>
-            <input id="username" type="text" v-model="username" />
-          </div>
+        <div>
+          <v-header>
+            Title
+          </v-header>
+          <v-main>
+            Lorem ipsum
+          </v-main>
         </div>
         `,
       });
 
-      app.component("item", {
-        // props: ["title", "desciption"],
-        props: {
-          title: {
-            type: String,
-            required: true,
-            default: ''
-          },
-          description: {
-            type: String,
-            required: true,
-            default: ''
-          }
-        },
+      app.component('v-header', {
         template: `
-        <div class="item">
-          <h4 class="title">{{title}}</h4>
-          <p>{{description}}</p>
-        </div>
-        `,
+          <header><slot /></header>
+        `
+      });
+
+      app.component('v-main', {
+        template: `
+          <main><slot /></main>
+        `
       });
 
       const vm = app.mount("#app");
