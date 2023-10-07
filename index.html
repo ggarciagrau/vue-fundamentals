@@ -14,45 +14,37 @@
       const app = Vue.createApp({
         data() {
           return {
-            items: ["one", "two", "three"]
-          };
+            text: "Hello vue"
+          }
         },
         methods: {
-          remove(idx) {
-            console.log("Parent event triggered")
-            const newItems = this.items;
-            newItems.splice(idx, 1);
-            this.items = newItems;
+          updateValue(newValue) {
+            this.text = newValue;
           }
         },
         template: `
-        <ul>
-          <v-item 
-            v-for="(item, idx) in items" 
-            :itemNumber="item"
-            v-on:remove="remove(idx)"
-          >
-            Item
-          </v-item>  
-        </ul>
-        `,
+        <div>
+          <h5>{{ text }}</h5>
+          <v-input :text="text" v-on:updateValue="updateValue"/>  
+        </div>
+        `
       });
 
-      app.component("v-item", {
+      app.component("v-input", {
         props: {
-          itemNumber: {
+          text: {
             type: String,
             required: true,
             default: ""
           }
         },
         methods: {
-          removeItself() {
+          sendNewValue(ev) {
             console.log('Child event triggered')
-            this.$emit("remove");
+            this.$emit("updateValue", ev.target.value)
           }
         },
-        template: `<li v-on:click="removeItself"><slot /> {{ itemNumber }}</li>`
+        template: `<input type="text" :value="text" v-on:input="sendNewValue" />`
       });
 
       const vm = app.mount("#app");
