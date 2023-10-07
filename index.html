@@ -17,15 +17,10 @@
             text: "Hello vue"
           }
         },
-        methods: {
-          updateValue(newValue) {
-            this.text = newValue;
-          }
-        },
         template: `
         <div>
           <h5>{{ text }}</h5>
-          <v-input :text="text" v-on:updateValue="updateValue"/>  
+          <v-input :text="text" v-model:text="text"/>  
         </div>
         `
       });
@@ -41,7 +36,7 @@
         methods: {
           sendNewValue(ev) {
             console.log('Child event triggered')
-            this.$emit("updateValue", ev.target.value)
+            this.$emit("update:text", ev.target.value)
           }
         },
         template: `<input type="text" :value="text" v-on:input="sendNewValue" />`
