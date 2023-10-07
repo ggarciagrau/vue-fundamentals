@@ -35,8 +35,12 @@
       });
 
       app.component("v-grandchild", {
-        inject: ["grandChildText"],
-        template: `<h3>{{ grandChildText }}</h3>`
+        inject: {
+          localText: {
+            from: 'grandChildText'
+        }
+      },
+        template: `<h3>{{ localText }}</h3>`
       });
 
       const vm = app.mount("#app");
