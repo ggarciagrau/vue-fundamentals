@@ -17,8 +17,10 @@
             text: "Hello world"
           }
         },
-        provide: {
-          grandChildText: "Welcome world"
+        provide() {
+          return {
+            grandChildText: this.text
+          }
         },
         template: `
         <div>{{ text }}</div>
