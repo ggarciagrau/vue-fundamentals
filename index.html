@@ -14,32 +14,27 @@
       const app = Vue.createApp({
         data() {
           return {
-            text: "Hello vue"
+            text: "Hello world"
           }
         },
+        provide: {
+          grandChildText: "Welcome world"
+        },
         template: `
-        <div>
-          <h5>{{ text }}</h5>
-          <v-input :text="text" v-model:text="text"/>  
-        </div>
+        <div>{{ text }}</div>
+        <v-child />
         `
       });
 
-      app.component("v-input", {
-        props: {
-          text: {
-            type: String,
-            required: true,
-            default: ""
-          }
-        },
-        methods: {
-          sendNewValue(ev) {
-            console.log('Child event triggered')
-            this.$emit("update:text", ev.target.value)
-          }
-        },
-        template: `<input type="text" :value="text" v-on:input="sendNewValue" />`
+      app.component("v-child", {
+        template: `
+          <v-grandchild />
+        `
+      });
+
+      app.component("v-grandchild", {
+        inject: ["grandChildText"],
+        template: `<h3>{{ grandChildText }}</h3>`
       });
 
       const vm = app.mount("#app");
