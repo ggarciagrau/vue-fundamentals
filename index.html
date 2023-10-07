@@ -17,33 +17,34 @@
             text: "Hello world"
           }
         },
-        provide() {
-          return {
-            grandChildText: this.text
+        template: `
+        <div ref="myRootRef"><v-button ref="myChildRef" :text="text" /></div>
+        `
+      });
+
+      app.component("v-button", {
+        props: {
+          text: {
+            type: String,
+            required: true,
+            default: ""
           }
         },
         template: `
-        <div>{{ text }}</div>
-        <v-child />
-        `
-      });
-
-      app.component("v-child", {
-        template: `
-          <v-grandchild />
-        `
-      });
-
-      app.component("v-grandchild", {
-        inject: {
-          localText: {
-            from: 'grandChildText'
+        <button>{{ text }}</button>
+        `,
+        mounted() {
+          console.log('Child props', this.$props)
         }
-      },
-        template: `<h3>{{ localText }}</h3>`
       });
 
       const vm = app.mount("#app");
+
+      vm.$data.text = "Hello petxina";
+      console.log(vm.$root)
+      console.log(vm.$el)
+      console.log(vm.$refs)
+      console.log(vm.$props)
     </script>
   </body>
 </html>
